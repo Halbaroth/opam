@@ -21,3 +21,18 @@
    (mode fallback)
    (action
      (write-file opamEmbeddedCygwinSetup.ml "let content = None")))
+
+(rule
+  (target opamEmbeddedAppContainer.ml)
+  (deps (:input ./app_container/app_container.exe))
+  ; (enabled_if
+  ;   (= %{os_type} Win32))
+  (action
+    (with-stdout-to %{target}
+      (run ocaml ../../shell/embed.ml %{input}))))
+
+; Embedded App Container wrapper (done in the configure script on Windows)
+ ; (rule
+ ;   (mode fallback)
+ ;   (action
+ ;     (write-file opamEmbeddedAppContainer.ml "let content = None")))
